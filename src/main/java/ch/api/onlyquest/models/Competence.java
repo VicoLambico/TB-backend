@@ -25,14 +25,15 @@ public class Competence {
 
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false,  length = 2000)
     private String description;
-    @Column(name = "bonus", nullable = false)
-    private int bonus;
+    @Column(name = "damage", nullable = false)
+    private int damage;
+
 
     @ManyToOne
-    @JoinColumn(name = "hero_category_id")
-    private Category heroCompetence;
+    @JoinColumn(name = "competence_category_id")
+    private Category competenceCategory;
 
 
     @ManyToMany(mappedBy = "competences")
@@ -64,21 +65,21 @@ public class Competence {
         this.description = description;
     }
 
-    public int getBonus() {
-        return bonus;
+    public int getDamage() {
+        return damage;
     }
 
-    public void setBonus(int bonus) {
-        this.bonus = bonus;
+    public void setDamage(int bonus) {
+        this.damage = bonus;
     }
 
     @JsonBackReference(value = "competencesInCategory")
-    public Category getHeroCompetence() {
-        return heroCompetence;
+    public Category getCompetenceCategory() {
+        return competenceCategory;
     }
 
-    public void setHeroCompetence(Category heroCompetence) {
-        this.heroCompetence = heroCompetence;
+    public void setCompetenceCategory(Category heroCompetence) {
+        this.competenceCategory = heroCompetence;
     }
 
     public List<Hero> getHeroes() {

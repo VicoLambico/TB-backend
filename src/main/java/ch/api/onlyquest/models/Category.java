@@ -29,7 +29,7 @@ public class Category {
 //    @JsonIgnore
     private List<Hero> heroes;
 
-    @OneToMany(mappedBy = "heroCompetence")
+    @OneToMany(mappedBy = "competenceCategory")
     @JsonBackReference(value = "competencesInCategory")
     private List<Competence> competences;
 

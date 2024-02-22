@@ -48,19 +48,19 @@ public class QuestController {
     public ResponseEntity<Quest> partialUpdateQuest(@PathVariable Long id, @RequestBody Quest questUpdates) {
         return questRepository.findById(id)
                 .map(quest -> {
-                    if (questUpdates.getQuestName() != null) {
+                    if (questUpdates.getQuestName() != null && questUpdates.getQuestName().trim() != "") {
                         quest.setQuestName(questUpdates.getQuestName());
                     }
                     if (questUpdates.getQuestLevel() != 0) {
                         quest.setQuestLevel(questUpdates.getQuestLevel());
                     }
-                    if (questUpdates.getLP() != 0) {
-                        quest.setLP(questUpdates.getLP());
+                    if (questUpdates.getLp() != 0) {
+                        quest.setLp(questUpdates.getLp());
                     }
                     if (questUpdates.getDps() != 0) {
                         quest.setDps(questUpdates.getDps());
                     }
-                    if (questUpdates.getDescription() != null) {
+                    if (questUpdates.getDescription() != null&& questUpdates.getDescription().trim() != "") {
                         quest.setDescription(questUpdates.getDescription());
                     }
 

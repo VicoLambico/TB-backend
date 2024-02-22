@@ -39,16 +39,20 @@ public class CompetenceController {
     public ResponseEntity<Competence> partialUpdateCompetence(@PathVariable Long id, @RequestBody Competence competenceUpdates) {
         return competenceRepository.findById(id)
                 .map(competence -> {
-                    if (competenceUpdates.getName() != null) {
+                    if (competenceUpdates.getName() != null && competenceUpdates.getName().trim() != "") {
                         competence.setName(competenceUpdates.getName());
                     }
-                    if (competenceUpdates.getDescription() != null) {
+                    if (competenceUpdates.getDescription() != null && competenceUpdates.getDescription().trim() != "") {
                         competence.setDescription(competenceUpdates.getDescription());
                     }
-                    if (competenceUpdates.getBonus() != 0) {
-                        competence.setBonus(competenceUpdates.getBonus());
+                    if (competenceUpdates.getDamage() != 0) {
+                        competence.setDamage(competenceUpdates.getDamage());
                     }
                     // Ajoutez d'autres conditions pour les propriétés que vous souhaitez mettre à jour
+
+                    if (competenceUpdates.getCompetenceCategory() != null) {
+                        competence.setCompetenceCategory(competenceUpdates.getCompetenceCategory());
+                    }
                     competenceRepository.save(competence);
                     return new ResponseEntity<>(competence, HttpStatus.OK);
                 })

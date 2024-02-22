@@ -25,11 +25,11 @@ public class Quest {
     private String questName;
     @Column(name = "quest_level", nullable = false)
     private int questLevel;
-    @Column(name = "hero_LP", nullable = false)
-    private int LP;
-    @Column(name = "hero_dps", nullable = false)
+    @Column(name = "quest_LP", nullable = false)
+    private int lp;
+    @Column(name = "quest_dps", nullable = false)
     private int dps;
-    @Column(name = "quest_description", nullable = false)
+    @Column(name = "quest_description", nullable = false, length = 2000)
     private String description;
 
     @ManyToMany(mappedBy = "quests")
@@ -61,12 +61,12 @@ public class Quest {
         this.questLevel = questLevel;
     }
 
-    public int getLP() {
-        return LP;
+    public int getLp() {
+        return lp;
     }
 
-    public void setLP(int LP) {
-        this.LP = LP;
+    public void setLp(int LP) {
+        this.lp = LP;
     }
 
     public int getDps() {
