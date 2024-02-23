@@ -3,14 +3,11 @@ package ch.api.onlyquest.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

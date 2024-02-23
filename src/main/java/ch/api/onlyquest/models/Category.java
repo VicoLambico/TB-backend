@@ -2,13 +2,10 @@ package ch.api.onlyquest.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
-
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,7 +17,14 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "category_name", nullable = false)
+
     private String categoryName;
+    @Column(name = "hero_LP", nullable = false)
+    private int lp;
+    @Column(name = "hero_dps", nullable = false)
+    private int dps;
+    @Column(name = "hero_energy", nullable = false)
+    private int energy;
 
     @Column(name = "description", nullable = false, length = 2000)
     private String description;
@@ -32,6 +36,30 @@ public class Category {
     @OneToMany(mappedBy = "competenceCategory")
     @JsonBackReference(value = "competencesInCategory")
     private List<Competence> competences;
+
+    public int getLp() {
+        return lp;
+    }
+
+    public void setLp(int lp) {
+        this.lp = lp;
+    }
+
+    public int getDps() {
+        return dps;
+    }
+
+    public void setDps(int dps) {
+        this.dps = dps;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
 
     public Long getId() {
         return id;

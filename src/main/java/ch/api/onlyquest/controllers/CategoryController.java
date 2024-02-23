@@ -68,6 +68,15 @@ public class CategoryController {
                     if (categoryUpdates.getDescription() != null && categoryUpdates.getDescription().trim() != "") {
                         category.setDescription(categoryUpdates.getDescription());
                     }
+                    if (categoryUpdates.getLp() != 0) {
+                        category.setLp(categoryUpdates.getLp());
+                    }
+                    if (categoryUpdates.getDps() != 0) {
+                        category.setDps(categoryUpdates.getDps());
+                    }
+                    if (categoryUpdates.getEnergy() != 0) {
+                        category.setEnergy(categoryUpdates.getEnergy());
+                    }
                     // Ajoutez d'autres conditions pour les propriétés que vous souhaitez mettre à jour
                     categoryRepository.save(category);
                     return new ResponseEntity<>(category, HttpStatus.OK);

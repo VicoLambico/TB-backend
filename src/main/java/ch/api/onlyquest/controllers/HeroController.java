@@ -1,5 +1,6 @@
 package ch.api.onlyquest.controllers;
 
+import ch.api.onlyquest.models.Category;
 import ch.api.onlyquest.models.Hero;
 import ch.api.onlyquest.repositiories.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,23 @@ public class HeroController {
 
     @PostMapping(value = "/heroes", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
+        if(hero.getHeroCategory() == null){
+            Category category = new Category();
+            category.setDps(0);
+            category.setLp(0);
+            category.setEnergy(0);
+            hero.setHeroCategory(category);
+            hero.setDps(category.getDps());
+            hero.setLp(category.getLp());
+            hero.setEnergy(category.getEnergy());
+        }else {
+            Category heroCategory = hero.getHeroCategory();
+            hero.setHeroCategory(heroCategory);
+            hero.setDps(heroCategory.getDps());
+            hero.setLp(heroCategory.getLp());
+            hero.setEnergy(heroCategory.getEnergy());
+        }
+        hero.setLvl(1);
         Hero savedHero = heroRepository.save(hero);
         return new ResponseEntity<>(savedHero, HttpStatus.CREATED);
     }
