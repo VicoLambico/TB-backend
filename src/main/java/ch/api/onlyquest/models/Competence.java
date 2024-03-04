@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "competences")
 public class Competence {
-
+    private String categoryName;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

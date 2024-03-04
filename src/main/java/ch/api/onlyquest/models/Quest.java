@@ -32,6 +32,9 @@ public class Quest {
     @Column(name = "quest_description", nullable = false, length = 2000)
     private String description;
 
+    @Column(name = "quest_experience", nullable = false)
+    private int experience;
+
     @ManyToMany(mappedBy = "quests")
     //annotation pour éviter une boucle infini
     @JsonIgnoreProperties("quests")

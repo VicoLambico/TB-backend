@@ -60,6 +60,9 @@ public class QuestController {
                     if (questUpdates.getDps() != 0) {
                         quest.setDps(questUpdates.getDps());
                     }
+                    if (questUpdates.getExperience() != 0) {
+                        quest.setExperience(questUpdates.getExperience());
+                    }
                     if (questUpdates.getDescription() != null&& questUpdates.getDescription().trim() != "") {
                         quest.setDescription(questUpdates.getDescription());
                     }

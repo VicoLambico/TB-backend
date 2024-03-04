@@ -1,5 +1,6 @@
 package ch.api.onlyquest.controllers;
 
+import ch.api.onlyquest.models.Category;
 import ch.api.onlyquest.models.Competence;
 import ch.api.onlyquest.repositiories.CompetenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,19 @@ public class CompetenceController {
 
     @PostMapping(value = "/competence", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Competence> createCompetence(@RequestBody Competence competence) {
+        if(competence.getCompetenceCategory() == null) {
+            Category category = new Category();
+            category.setCategoryName("null");
+            category.setDps(0);
+            category.setLp(0);
+            category.setEnergy(0);
+            competence.setCompetenceCategory(category);
+        }else {
+            Category competenceCategory = competence.getCompetenceCategory();
+            competence.setCompetenceCategory(competenceCategory);
+
+            competence.setCategoryName(competenceCategory.getCategoryName());
+        }
         Competence savedCompetence = competenceRepository.save(competence);
         return new ResponseEntity<>(savedCompetence, HttpStatus.CREATED);
     }
@@ -48,7 +62,6 @@ public class CompetenceController {
                     if (competenceUpdates.getDamage() != 0) {
                         competence.setDamage(competenceUpdates.getDamage());
                     }
-                    // Ajoutez d'autres conditions pour les propriétés que vous souhaitez mettre à jour
 
                     if (competenceUpdates.getCompetenceCategory() != null) {
                         competence.setCompetenceCategory(competenceUpdates.getCompetenceCategory());

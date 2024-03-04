@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "heroes_categories")
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,8 +21,10 @@ public class Category {
 
     private String categoryName;
     @Column(name = "hero_LP", nullable = false)
+    // life point
     private int lp;
     @Column(name = "hero_dps", nullable = false)
+    //damage per second
     private int dps;
     @Column(name = "hero_energy", nullable = false)
     private int energy;
@@ -30,7 +33,6 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "heroCategory")
-//    @JsonIgnore
     private List<Hero> heroes;
 
     @OneToMany(mappedBy = "competenceCategory")
@@ -101,4 +103,6 @@ public class Category {
     public void setCompetences(List<Competence> competences) {
         this.competences = competences;
     }
+
+
 }

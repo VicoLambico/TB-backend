@@ -24,22 +24,24 @@ public class Hero  {
     private String heroName;
     @Column(name = "hero_level", nullable = false)
     private int lvl;
+    @Column(name = "hero_experience", nullable = false)
+    private int experience;
+
     @Column(name = "hero_LP", nullable = false)
     private int lp;
     @Column(name = "hero_dps", nullable = false)
     private int dps;
     @Column(name = "hero_energy", nullable = false)
     private int energy;
+    private String categoryName;
 
     //foreign key
     @ManyToOne
     @JoinColumn(name = "hero_category_id")
-//    @JsonIgnoreProperties("heroes")
     private Category heroCategory;
     //foreign key
     @ManyToOne
     @JoinColumn(name = "user_id")
-//    @JsonIgnoreProperties("heroes")
     private User userHeroes;
 
 
@@ -47,18 +49,16 @@ public class Hero  {
     @ManyToMany()
     //définir les colonnes qui vont être creer dans la table MANY-MANY
     @JoinTable(joinColumns = @JoinColumn(name = "hero_id"),inverseJoinColumns = @JoinColumn(name = "quest_id"))
-
     //annotation pour éviter une boucle infini
     @JsonIgnoreProperties("heroesInQuest")
-    private List<Quest> quests = new ArrayList<>();;
+    private List<Quest> quests = new ArrayList<>();
 
     @ManyToMany()
     //définir les colonnes qui vont être creer dans la table MANY-MANY
     @JoinTable(joinColumns = @JoinColumn(name = "hero_id"),inverseJoinColumns = @JoinColumn(name = "competence_id"))
     //annotation pour éviter une boucle infini
     @JsonIgnoreProperties("heroes")
-    private List<Competence> competences = new ArrayList<>();;
-
+    private List<Competence> competences = new ArrayList<>();
 
 
     public Long getId() {
