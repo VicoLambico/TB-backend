@@ -25,8 +25,16 @@ public class User {
     private String login;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private boolean admin;
 
+    public boolean isAdmin() {
+        return admin;
+    }
 
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 
     @OneToMany(mappedBy = "userHeroes")
     private List<Hero> heroes;

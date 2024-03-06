@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping(value = "/user", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> createUser(@RequestBody User user) {
-
+        user.setAdmin(false);
         if (userRepository.existsByEmailOrLogin(user.getEmail(), user.getLogin())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Login or Email already used.");
@@ -38,12 +38,14 @@ public class UserController {
 
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
+
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
         // Récupérez l'utilisateur en fonction du nom d'utilisateur
@@ -64,6 +66,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
         }
     }
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
         return ResponseEntity.ok().header("Location", "/login").body("Logout successful");
@@ -107,6 +110,10 @@ public class UserController {
                     }
                     if (userUpdates.getPassword() != null) {
                         user.setPassword(userUpdates.getPassword());
+                    }
+                    //uniquement les admin peuvent chager isAdmin
+                    if(userUpdates.isAdmin() == true){
+                        user.setAdmin(userUpdates.isAdmin());
                     }
                     userRepository.save(user);
                     return new ResponseEntity<>(user, HttpStatus.OK);

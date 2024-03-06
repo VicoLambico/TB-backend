@@ -46,14 +46,14 @@ public class Hero  {
 
 
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     //définir les colonnes qui vont être creer dans la table MANY-MANY
     @JoinTable(joinColumns = @JoinColumn(name = "hero_id"),inverseJoinColumns = @JoinColumn(name = "quest_id"))
     //annotation pour éviter une boucle infini
     @JsonIgnoreProperties("heroesInQuest")
     private List<Quest> quests = new ArrayList<>();
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     //définir les colonnes qui vont être creer dans la table MANY-MANY
     @JoinTable(joinColumns = @JoinColumn(name = "hero_id"),inverseJoinColumns = @JoinColumn(name = "competence_id"))
     //annotation pour éviter une boucle infini

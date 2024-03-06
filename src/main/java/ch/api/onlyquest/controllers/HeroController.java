@@ -4,6 +4,7 @@ import ch.api.onlyquest.models.Category;
 import ch.api.onlyquest.models.Competence;
 import ch.api.onlyquest.models.Hero;
 import ch.api.onlyquest.models.User;
+import ch.api.onlyquest.repositiories.CompetenceRepository;
 import ch.api.onlyquest.repositiories.HeroRepository;
 import ch.api.onlyquest.repositiories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class HeroController {
     private HeroRepository heroRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CompetenceRepository competenceRepository;
 
     @GetMapping("/heroes")
     public List<Hero> getAllHeroes() {
@@ -60,6 +63,7 @@ public class HeroController {
             hero.setCategoryName(heroCategory.getCategoryName());
             hero.setExperience(0);
 
+
             Optional<User> optionalUser = userRepository.findById(userId);
             if (optionalUser.isPresent()){
                 User user = optionalUser.get();
@@ -70,7 +74,35 @@ public class HeroController {
 
         }
         hero.setLvl(1);
+
+        // Gestion des compétences
+        if (hero.getCompetences() != null && !hero.getCompetences().isEmpty()) {
+            List<Competence> savedCompetences = new ArrayList<>();
+
+            for (Competence competence : hero.getCompetences()) {
+                // Vérifier si la compétence existe déjà dans la base de données
+                Optional<Competence> optionalCompetence = competenceRepository.findById(competence.getId());
+
+                if (optionalCompetence.isPresent()) {
+                    // Si elle existe, utilisez la compétence existante
+                    savedCompetences.add(optionalCompetence.get());
+                } else {
+                    // Sinon, sauvegarder la nouvelle compétence
+                    savedCompetences.add(competenceRepository.save(competence));
+                }
+            }
+
+            hero.setCompetences(savedCompetences);
+
+            // Mise à jour de la table d'association
+            for (Competence competence : savedCompetences) {
+                competence.getHeroes().add(hero);
+            }
+        }
+
         Hero savedHero = heroRepository.save(hero);
+
+
         return new ResponseEntity<>(savedHero, HttpStatus.CREATED);
     }
 

@@ -34,7 +34,10 @@ public class Competence {
     private Category competenceCategory;
 
 
-    @ManyToMany(mappedBy = "competences")
+    @ManyToMany(
+            mappedBy = "competences",
+            fetch = FetchType.LAZY,
+            cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     //annotation pour éviter une boucle infini
     @JsonIgnoreProperties("competences")
     private List<Hero> heroes = new ArrayList<>();
