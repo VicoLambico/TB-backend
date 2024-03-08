@@ -77,7 +77,7 @@ public class CategoryController {
                     if (categoryUpdates.getEnergy() != 0) {
                         category.setEnergy(categoryUpdates.getEnergy());
                     }
-                    // Ajoutez d'autres conditions pour les propriétés que vous souhaitez mettre à jour
+
                     categoryRepository.save(category);
                     return new ResponseEntity<>(category, HttpStatus.OK);
                 })
